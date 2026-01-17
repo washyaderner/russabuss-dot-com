@@ -833,22 +833,22 @@ Use this approach for business automation tasks (lead scraping, data enrichment,
 ## Scratchpad
 
 ### Current Task
-- [X] Merge project rules and best practices into `.cursorrules`
-- [X] Summarize project initialization steps
-- [X] Provide parallel agent setup guidance
+- [X] Create five directives for parallel agent work
+- [X] Update scratchpad with current delegation plan
 - [ ] Awaiting next user task
 
 ### Task Plan
-- [X] Compare existing rules and project notes for merge plan
-- [X] Merge rules and update `.cursorrules`
-- [X] Summarize onboarding steps from `russabuss-init-prompt.md`
-- [X] Provide parallel agent guidance from `AGENTS.md`
+- [X] Draft directive for repo structure audit
+- [X] Draft directive for base styles
+- [X] Draft directive for base layout and header
+- [X] Draft directive for footer component
+- [X] Draft directive for Contentful and Supabase stubs
 
 ### Progress Notes
-- Combined project context, security requirements, and agent standards into a single `.cursorrules`.
+- Created five directives in `directives/` for parallel execution.
 
 ### Next Steps
-- Ready for next instructions.
+- Assign each directive to a separate agent and start on `feature/*` branches.
 
 ## Lessons
 
