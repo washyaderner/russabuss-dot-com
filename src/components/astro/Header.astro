@@ -32,9 +32,50 @@ const currentPath = Astro.url.pathname;
       }
     </ul>
 
-    <a href="/login" class="login-link">Login</a>
+    <a href="/login" class="login-link desktop-login">Login</a>
+
+    <!-- Mobile menu button -->
+    <button
+      type="button"
+      class="mobile-menu-button"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label="Open navigation menu"
+    >
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
   </nav>
 </header>
+
+<!-- Mobile menu overlay -->
+<div
+  id="mobile-menu"
+  class="mobile-menu"
+  aria-hidden="true"
+>
+  <nav class="mobile-menu-content" aria-label="Mobile navigation">
+    <ul class="mobile-nav-links" role="list">
+      {
+        navLinks.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              class:list={['mobile-nav-link', { active: currentPath === href }]}
+              aria-current={currentPath === href ? 'page' : undefined}
+            >
+              {label}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a href="/login" class="mobile-nav-link">Login</a>
+      </li>
+    </ul>
+  </nav>
+</div>
 
 <style>
   .header {
@@ -90,9 +131,174 @@ const currentPath = Astro.url.pathname;
     color: var(--color-text-primary);
   }
 
+  /* Mobile menu button - hidden on desktop */
+  .mobile-menu-button {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .hamburger-line {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: var(--color-text-primary);
+    transition: transform var(--transition-base), opacity var(--transition-base);
+  }
+
+  /* Hamburger to X animation when menu is open */
+  .mobile-menu-button[aria-expanded="true"] .hamburger-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .mobile-menu-button[aria-expanded="true"] .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-button[aria-expanded="true"] .hamburger-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Mobile menu overlay */
+  .mobile-menu {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: var(--z-modal, 100);
+    background-color: var(--color-bg-primary);
+    transform: translateX(100%);
+    transition: transform var(--transition-base);
+    overflow-y: auto;
+  }
+
+  .mobile-menu[aria-hidden="false"] {
+    transform: translateX(0);
+  }
+
+  .mobile-menu-content {
+    padding: var(--space-8) var(--space-6);
+  }
+
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    list-style: none;
+  }
+
+  .mobile-nav-link {
+    display: block;
+    padding: var(--space-3) 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast);
+  }
+
+  .mobile-nav-link:hover,
+  .mobile-nav-link.active {
+    color: var(--color-text-primary);
+  }
+
+  /* Responsive behavior */
   @media (max-width: 768px) {
     .nav-links {
       display: none;
     }
+
+    .desktop-login {
+      display: none;
+    }
+
+    .mobile-menu-button {
+      display: flex;
+    }
+  }
+
+  /* Hide mobile menu on desktop */
+  @media (min-width: 769px) {
+    .mobile-menu {
+      display: none;
+    }
   }
 </style>
+
+<script>
+  const mobileMenuButton = document.querySelector('.mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileNavLinks = mobileMenu?.querySelectorAll('.mobile-nav-link');
+
+  if (mobileMenuButton && mobileMenu) {
+    // Toggle menu on button click
+    mobileMenuButton.addEventListener('click', toggleMenu);
+
+    // Close menu when a link is clicked
+    mobileNavLinks?.forEach((link) => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    // Close menu on Escape key
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && isMenuOpen()) {
+        closeMenu();
+        mobileMenuButton.focus();
+      }
+    });
+
+    // Close menu on resize above breakpoint
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768 && isMenuOpen()) {
+        closeMenu();
+      }
+    });
+
+    // Close menu when clicking outside (on the overlay background)
+    mobileMenu.addEventListener('click', (event) => {
+      if (event.target === mobileMenu) {
+        closeMenu();
+        mobileMenuButton.focus();
+      }
+    });
+  }
+
+  function isMenuOpen(): boolean {
+    return mobileMenuButton?.getAttribute('aria-expanded') === 'true';
+  }
+
+  function toggleMenu(): void {
+    if (isMenuOpen()) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  }
+
+  function openMenu(): void {
+    mobileMenuButton?.setAttribute('aria-expanded', 'true');
+    mobileMenuButton?.setAttribute('aria-label', 'Close navigation menu');
+    mobileMenu?.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Focus the first link in the menu
+    const firstLink = mobileMenu?.querySelector('.mobile-nav-link') as HTMLElement;
+    firstLink?.focus();
+  }
+
+  function closeMenu(): void {
+    mobileMenuButton?.setAttribute('aria-expanded', 'false');
+    mobileMenuButton?.setAttribute('aria-label', 'Open navigation menu');
+    mobileMenu?.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+</script>
