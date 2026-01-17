@@ -1,0 +1,144 @@
+/**
+ * Design System Variables
+ *
+ * Color palette and design tokens for russabuss.com
+ * Based on dark mode aesthetic with Nike/Apple-level polish
+ */
+
+:root {
+  /* ========================================
+   * Dark Backgrounds
+   * Used for page backgrounds and containers
+   * ======================================== */
+  --color-bg-primary: #0a0a0a;
+  --color-bg-secondary: #141414;
+  --color-bg-elevated: #1a1a1a;
+  --color-bg-slate: #1e1e1e;
+
+  /* ========================================
+   * Text Colors
+   * Primary for headings, secondary for body, muted for hints
+   * ======================================== */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a0a0a0;
+  --color-text-muted: #666666;
+
+  /* ========================================
+   * Accent Colors
+   * Brand accent for interactive elements
+   * ======================================== */
+  --color-accent: #6366f1;
+  --color-accent-hover: #818cf8;
+
+  /* ========================================
+   * Gradients
+   * Eye candy sections use futuristic gradient
+   * Slate sections use dark minimalist gradient
+   * ======================================== */
+
+  /* Vibrant gradient for hero and accent sections */
+  --gradient-futuristic: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+
+  /* Subtle gradient for hero backgrounds */
+  --gradient-hero: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+
+  /* Dark gradient for slate sections */
+  --gradient-slate: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+
+  /* ========================================
+   * Typography
+   * Display: Space Grotesk (geometric sans)
+   * Body: Inter or system stack
+   * Mono: JetBrains Mono (code/specs)
+   * ======================================== */
+  --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ========================================
+   * Font Sizes
+   * Fluid scale for responsive typography
+   * ======================================== */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+  --font-size-5xl: 3rem;      /* 48px */
+  --font-size-6xl: 3.75rem;   /* 60px */
+
+  /* ========================================
+   * Spacing
+   * Consistent spacing scale
+   * ======================================== */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+
+  /* ========================================
+   * Border Radius
+   * Consistent rounding for UI elements
+   * ======================================== */
+  --radius-sm: 0.25rem;   /* 4px */
+  --radius-md: 0.5rem;    /* 8px */
+  --radius-lg: 0.75rem;   /* 12px */
+  --radius-xl: 1rem;      /* 16px */
+  --radius-2xl: 1.5rem;   /* 24px */
+  --radius-full: 9999px;
+
+  /* ========================================
+   * Shadows
+   * Subtle shadows for depth on dark backgrounds
+   * ======================================== */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.5);
+
+  /* Glow effect for accent elements */
+  --shadow-glow: 0 0 20px rgb(99 102 241 / 0.3);
+
+  /* ========================================
+   * Transitions
+   * Consistent timing for animations
+   * ======================================== */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
+  --transition-slower: 500ms ease;
+
+  /* ========================================
+   * Z-Index Scale
+   * Layering system for overlays and modals
+   * ======================================== */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-overlay: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-toast: 700;
+
+  /* ========================================
+   * Container Widths
+   * Max widths for content containers
+   * ======================================== */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+}
