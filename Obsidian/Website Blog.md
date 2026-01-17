@@ -1,0 +1,1 @@
+The next page is the blog page, so it needs to be structured like a standard page. I'll be using Contentful to publish. Remember SEO optimized is the goal

@@ -1,0 +1,876 @@
+## .cursorrules
+
+## Project Overview
+
+### Russabuss Music Website
+- **Goal**: Music production portfolio and e-commerce site for Russ A Buss (`russabuss.com`). Sells beats and sample packs, showcases mixing, mastering, and production services, and handles client inquiries.
+- **Brand Voice**: Professional but approachable. Confident without arrogance. Creative rule-breaker with proven results.
+- **Design Aesthetic**: Dark mode, deep contrast, smooth animations, Nike or Apple-level polish. Alternate between eye candy sections and dark slate sections.
+
+## Tech Stack
+| Layer | Tool | Notes |
+| --- | --- | --- |
+| Framework | Astro | 4.x, hybrid rendering (static default, SSR opt-in) |
+| Interactive UI | React | 18.x islands for audio player, checkout, 3D, forms |
+| Styling | Vanilla CSS | Custom properties, CSS Modules, no Tailwind |
+| Animations | GSAP + ScrollTrigger | Scroll effects, parallax, transitions |
+| 3D | Three.js | Hero and background visuals |
+| Audio | Wavesurfer.js | Waveform visualization for beat player |
+| Auth | Supabase Auth | Email and password (OAuth optional future) |
+| Database | Supabase Postgres | Users and orders |
+| CMS | Contentful | Beats, sample packs, blog posts, services |
+| Payments | Stripe Checkout | Primary payment processor |
+| Payments Alt | PayPal | Secondary option |
+| Email | Resend | Transactional emails, purchase delivery |
+| Hosting | Vercel | Astro adapter, serverless functions |
+
+## Site Structure
+
+### Navigation
+```
+Home | Beats | Services | Portfolio | About | Blog | Contact | [Login/Account]
+```
+
+### Pages
+- **/**: Hero with GSAP and Three.js, pricing carousel, trust section, services grid, qualifications and gear, FAQ tiles, contact form, footer
+- **/beats**: Wavesurfer.js player, beat grid with filtering, license modal system, add-to-cart
+- **/services**: Service sections with YouTube embeds and images
+- **/portfolio**: Project showcases with Spotify or YouTube embeds, case studies, client reviews
+- **/about**: TLDR bullet points, extended bio, why hire Russ
+- **/blog**: Contentful blog listing and post pages, SEO optimized
+- **/contact**: Contact form, reviews, "Your Dreams in ASMR" intro copy
+- **/login** and **/register**: Supabase Auth email and password
+- **/account**: Dashboard and order history
+
+### API Routes
+- `/api/checkout` - Create Stripe session
+- `/api/webhook` - Stripe webhook handler
+- `/api/contact` - Contact form submission
+
+## Design System
+
+### Color Palette
+```css
+/* Dark backgrounds */
+--color-bg-primary: #0a0a0a;
+--color-bg-secondary: #141414;
+--color-bg-elevated: #1a1a1a;
+--color-bg-slate: #1e1e1e;
+
+/* Text */
+--color-text-primary: #ffffff;
+--color-text-secondary: #a0a0a0;
+--color-text-muted: #666666;
+
+/* Accent (customize to brand) */
+--color-accent: #6366f1;
+--color-accent-hover: #818cf8;
+
+/* Eye candy gradients */
+--gradient-futuristic: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+--gradient-hero: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+
+/* Slate sections */
+--gradient-slate: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+```
+
+### Section Rhythm
+Alternate between:
+1. **Eye candy**: Futuristic gradients, color, glow effects
+2. **Dark slate**: Black and white gradients, minimalist, shadow effects
+
+### Typography
+- **Display**: Space Grotesk or similar geometric sans
+- **Body**: Inter or system stack
+- **Mono**: JetBrains Mono (for code and specs)
+
+## Component Patterns
+
+### React Islands (client:load or client:visible)
+- `AudioPlayer.jsx` - Wavesurfer integration
+- `BeatCard.jsx` - Individual beat with play and buy
+- `CheckoutButton.jsx` - Stripe integration
+- `LicenseModal.jsx` - License text display
+- `ContactForm.jsx` - Form with validation
+- `ThreeScene.jsx` - 3D background elements
+- `LoginForm.jsx` / `RegisterForm.jsx` - Auth forms
+
+### Astro Components (static)
+- `Header.astro` - Navigation, mobile menu
+- `Footer.astro` - Contact info, Bitcoin tip, QR, links
+- `SEO.astro` - Meta tags, structured data
+- `ServiceCard.astro` - Service grid items
+- `PortfolioEmbed.astro` - Spotify or YouTube embeds
+- `PricingTier.astro` - Pricing carousel cards
+- `FAQTile.astro` - FAQ grid items
+
+## Critical Implementation Notes
+
+### Audio Player
+- Use Wavesurfer.js for waveform visualization
+- Responsive waveform that fits container
+- Play and pause, progress bar, time display
+- Queue system for continuous playback
+- License selection triggers before add-to-cart
+
+### License Modals
+- 4 license types: Non-Exclusive, Exclusive, Non-Exclusive Commercial, Exclusive Commercial
+- Legal text must remain 100% unchanged
+- Modal or slide-out panel UI
+- "VIEW LICENSE" button on pricing tiers
+
+### Pricing Carousel (Home)
+- 4 tiers visible simultaneously (no horizontal scroll)
+- Responsive: stack on mobile
+- Eye candy gradient background
+- Each tier has title, price, specs list, and "VIEW LICENSE" button
+
+### YouTube Embeds (Services and Portfolio)
+- Lazy load for performance
+- Responsive aspect ratio
+- Use `lite-youtube-embed` or similar for performance
+
+### Contact Form
+- Fields: First name, Last name, Email, Service checkboxes, Notes
+- Checkboxes: Mix and Master, Custom Tracks, Instrumentals, Studio Time, Vox, DJ, Other
+- Validation before submit
+- Resend integration for notifications
+
+### Footer (all pages)
+```
+Russ A Buss
+Your audio deserves the best treatment
+Tip Russ in Bitcoin: 33KK4NduUZLJHsNXV5KWbgpvfzSvcLGgoK
+
+[LinkTree QR Code]
+
+Contact:
+(503) 734-5502
+audio@russabuss.com
+russabuss.eth
+russabuss.sol
+```
+
+## Content References
+
+### Key Copy Snippets
+- **Homepage Hero**: "Beats. Mixing. Mastering. Your sound, elevated."
+- **Trust Section Title**: "Your audio is in good hands"
+- **Services Intro**: "MY APPROACH WITH ANY PROJECT..." "Each project I take on has different needs, and I want to make sure you're 100% happy with the final copy."
+- **Contact Intro**: "YOUR DREAMS IN ASMR" "Send me a message using the form below..."
+- **Footer Tagline**: "Your audio deserves the best treatment"
+
+### Mock Data Structure (for dev)
+```javascript
+// src/data/mock-beats.js
+export const mockBeats = [
+  {
+    id: 'demo-beat-1',
+    slug: 'midnight-trap',
+    title: 'Midnight Trap',
+    bpm: 140,
+    key: 'F minor',
+    tags: ['trap', 'dark', '808'],
+    audioPreview: '/audio/demo-preview.mp3',
+    coverArt: '/images/demo-cover.jpg',
+    prices: {
+      mp3: 50,
+      wav: 80,
+      stems: 249,
+      exclusive: 2000
+    },
+    available: true
+  },
+  // Add 3-5 more for testing
+];
+```
+
+### Contentful Content Types (for reference)
+
+#### Beat
+- title (Short text)
+- slug (Short text)
+- bpm (Integer)
+- key (Short text)
+- tags (Short text, list)
+- audioPreview (Media or Link)
+- coverArt (Media)
+- priceMp3 (Integer)
+- priceWav (Integer)
+- priceStems (Integer)
+- priceExclusive (Integer)
+- driveLink (Short text)
+- available (Boolean)
+
+#### Sample Pack
+- title, slug, price, description (Rich text), coverArt, audioPreview, contents, driveLink, tags
+
+#### Blog Post
+- title, slug, excerpt, content (Rich text), coverImage, publishDate, author, tags
+
+## File Organization
+
+### App Structure
+```
+src/
+├── components/
+│   ├── react/           # Interactive islands
+│   └── astro/           # Static components
+├── layouts/
+│   ├── BaseLayout.astro
+│   └── ProductLayout.astro
+├── pages/
+│   ├── index.astro
+│   ├── beats/
+│   ├── services.astro
+│   ├── portfolio.astro
+│   ├── about.astro
+│   ├── blog/
+│   ├── contact.astro
+│   ├── login.astro
+│   ├── register.astro
+│   ├── account/
+│   └── api/
+├── lib/
+│   ├── contentful.js
+│   ├── supabase.js
+│   ├── stripe.js
+│   └── resend.js
+├── styles/
+│   ├── global.css
+│   ├── variables.css
+│   ├── animations.css
+│   └── components/
+├── data/
+│   └── mock-beats.js    # Dev mock data until Contentful connected
+└── types/
+```
+
+### Automation and DOE Structure
+```
+project/
+├── directives/        # SOPs in Markdown (what to do)
+├── execution/         # Python scripts (how to do it)
+├── .tmp/              # Intermediate files, never commit
+├── .env               # API keys and environment variables
+├── credentials.json   # Google OAuth (gitignored)
+└── token.json         # Google OAuth (gitignored)
+```
+
+### Deliverables vs Intermediates
+- **Deliverables**: Google Sheets, Google Slides, or other cloud-based outputs the user can access
+- **Intermediates**: Temporary files needed during processing
+- **Key principle**: Local files are for processing only. Deliverables live in cloud services. Everything in `.tmp/` can be deleted and regenerated.
+
+## Development Workflow
+
+### Before ANY Modification
+1. Read complete file top to bottom
+2. Understand purpose and structure
+3. Identify existing patterns
+4. Check for duplicate functionality
+5. Follow established conventions
+
+### Testing Checkpoints
+After each major feature:
+1. Dev server runs without errors
+2. Page renders correctly
+3. Mobile responsive
+4. Animations smooth (no jank)
+5. Accessibility basics (focus states, alt text)
+
+### Error Handling and Loop Prevention
+- Fix if clear how to proceed
+- Do not loop more than 3 times on same file
+- On third attempt: stop and ask the user
+- Never ignore errors silently. Handle or propagate. Document ignored warnings with justification.
+
+## Security Requirements - ALWAYS IMPLEMENT
+
+### Input Validation and Sanitization
+- Validate and sanitize all user inputs on both client and server side
+- Remove HTML tags, script elements, and special characters from text inputs
+- Validate email formats, URLs, and data types before processing
+- Limit input length to reasonable maximums for each field
+- Use allowlists (not blocklists) for acceptable input patterns
+- Escape special characters in database queries and HTML output
+- Implement input validation libraries (e.g., Joi, Zod, validator.js)
+- Periodically audit the allow list to avoid prompt injections
+
+### Authentication and Authorization
+- Hash passwords using bcrypt with salt rounds of 12 (never use MD5, SHA1, or plain text)
+- Require passwords: minimum 12 characters with letters, numbers, and symbols
+- Implement account lockout after 5 failed login attempts with exponential backoff
+- Use secure session tokens generated with `crypto.randomBytes` (32+ bytes)
+- Set session timeout after 30 minutes of inactivity
+- Implement role-based access control (RBAC)
+- Users can only access and modify their own data unless explicitly authorized
+- Verify user permissions on every API endpoint before processing
+- Use JWT tokens with proper expiration and signature verification if applicable
+- Implement OAuth 2.0 correctly with proper state parameter validation
+
+### Secrets and Environment Variables
+- Store all sensitive data in environment variables, never hardcode
+- Use descriptive variable names (e.g., `DATABASE_URL`, `STRIPE_API_KEY`)
+- Provide `.env.example` with dummy values, add `.env` to `.gitignore`
+- For Next.js: never use `NEXT_PUBLIC_` prefix for sensitive data
+- Document required environment variables in `README`
+
+### Database Security
+- Use parameterized queries or ORMs, never string concatenation for SQL
+- Implement least-privilege database user accounts
+- Filter database results by user ownership automatically
+- Enable encryption at rest if supported by database
+- Sanitize all data before database insertion
+- Use prepared statements for all queries
+- Implement database connection pooling with proper timeout settings
+
+### API Security
+- Implement rate limiting: 100 requests per user per minute (adjust based on needs)
+- Require authentication for all data modification endpoints
+- Use proper HTTP methods (GET for reads, POST or PUT or PATCH for writes, DELETE for deletes)
+- Validate Content-Type headers
+- Implement CORS with specific allowed origins (not wildcard `*`)
+- Return generic error messages to clients (do not expose system details)
+- Log all API requests for security monitoring (do not log sensitive data)
+- Use API versioning (e.g., `/api/v1/`)
+- Implement request size limits to prevent DoS
+
+### CSRF and XSS Protection
+- Implement CSRF tokens for all state-changing operations
+- Use random CSRF tokens, not predictable values
+- Set SameSite cookie attribute to `Strict` or `Lax`
+- Sanitize all user-generated content before rendering
+- Use Content Security Policy (CSP) headers
+- Encode output based on context (HTML, JavaScript, URL)
+
+### Secure Headers
+Configure these HTTP security headers:
+- Strict-Transport-Security: `max-age=31536000; includeSubDomains; preload`
+- X-Frame-Options: `DENY` (or `SAMEORIGIN` if framing needed)
+- X-Content-Type-Options: `nosniff`
+- Content-Security-Policy: configure appropriately for your app
+- Referrer-Policy: `strict-origin-when-cross-origin`
+- Permissions-Policy: disable unnecessary features
+
+### Error Handling
+- Implement try-catch blocks for all async operations
+- Log errors to server or monitoring service with context, not sensitive data
+- Return generic error messages to users (e.g., "An error occurred")
+- Never expose stack traces, database error messages, file paths, system info, internal IP addresses, or software versions
+- Use proper HTTP status codes (400, 401, 403, 404, 500)
+
+### File Upload Security
+- Validate file types using content inspection, not just extension
+- Limit file sizes (e.g., 5MB max)
+- Sanitize uploaded filenames
+- Store uploaded files outside web root or use cloud storage (S3, Azure Blob)
+- Scan uploaded files for malware if possible
+- Generate unique filenames to prevent overwriting
+- Strip EXIF data from images if not needed
+
+### Data Encryption
+- Use HTTPS or TLS for all connections (redirect HTTP to HTTPS)
+- Encrypt sensitive data at rest using AES-256
+- Use TLS 1.2 or higher (disable older versions)
+- Implement proper certificate validation
+- Use secure random number generation for tokens and keys
+
+### Session Management
+- Use secure, httpOnly, and SameSite cookies
+- Implement absolute and idle session timeouts
+- Regenerate session IDs after login
+- Destroy sessions on logout
+- Invalidate all sessions on password reset
+
+### Additional Security Measures
+- Implement proper logging and monitoring without logging secrets
+- Use UUIDs for IDs instead of sequential integers
+- Implement email verification for new accounts
+- Add CAPTCHA for sensitive operations if needed
+- Keep all dependencies updated and scan for vulnerabilities
+- Follow OWASP Top 10 guidelines
+- Implement `security.txt` file for responsible disclosure
+- Use subresource integrity (SRI) for CDN resources
+
+### Code Quality and Testing (Security)
+- Write unit tests for security-critical functions
+- Include security test cases
+- Comment security-critical code sections with reasoning
+- Use linting tools with security rules enabled
+- Avoid using `eval()` or similar dynamic code execution
+- Validate and sanitize data at system boundaries
+- Prioritize security over convenience
+
+## Tech Stack Audit
+
+### Project Context Questions
+1. What type of application? (content site, SPA behind auth, dynamic web app, e-commerce, API)
+2. Team size and experience level?
+3. Timeline pressure? (2-week MVP vs. long-term build)
+4. Performance requirements? (standard vs. critical)
+5. Maintenance horizon? (1-3 years vs. 5-10 years)
+6. Budget constraints? (bootstrap vs. enterprise)
+7. Deployment flexibility needs? (vendor lock-in acceptable?)
+8. Accessibility and compliance requirements?
+
+### Evaluation Criteria by Category
+
+#### Frontend Framework
+- Do we actually need SSR? Most SPAs behind login walls do not. No SEO benefit.
+- Default bias to avoid: Next.js. Complexity grows exponentially with App Router.
+- Evaluate instead:
+  - Content sites: Astro (98% less JS, 95/100 Lighthouse)
+  - SPAs: React + Vite (fast startup)
+  - Dynamic apps: Remix (less JS, web standards, portable)
+  - Performance-critical: SvelteKit (smaller bundles)
+  - Fastest MVP: Rails or Laravel
+
+#### CSS Approach
+- Default bias to avoid: Tailwind. HTML bloat often exceeds CSS savings.
+- Evaluate instead:
+  - Component architectures: CSS Modules
+  - Large projects: SCSS or Sass (7-1 architecture)
+  - Modern browsers: Vanilla CSS (nesting, container queries, custom properties)
+  - Rapid prototyping only: Tailwind acceptable for throwaway code
+
+#### Type System
+- Default bias to avoid: TypeScript everywhere.
+- Evaluate instead:
+  - Under 10K lines or solo dev: Vanilla JavaScript
+  - Libraries: JSDoc (type checking via tsserver)
+  - Large teams (50K+ lines): TypeScript justified
+  - Rapid prototyping: Skip types entirely
+
+#### UI Components
+- Default bias to avoid: Shadcn UI. No versioning, fragile dependency chain.
+- Evaluate instead:
+  - Balance of features and DX: Mantine
+  - Enterprise stability: Material UI
+  - Accessibility-first: Chakra UI
+  - Data-heavy dashboards: Ant Design
+
+#### Backend
+- Default bias to avoid: Node.js for everything.
+- Evaluate instead:
+  - Fastest MVP: Rails or Laravel
+  - Already React frontend: Express, Fastify, or Hono
+  - Performance-critical APIs: Go (Gin) or Rust (Axum)
+  - ML and AI integration: Python (Django, FastAPI)
+  - Hybrid pattern often wins: Rails or Laravel API + React frontend
+
+### Decision Rules
+1. Justify every complexity addition. If you cannot articulate why Next.js over Vite, use Vite.
+2. Boring technology wins for longevity.
+3. Match tool to actual scale.
+4. Optimize for developer happiness.
+5. The platform outlasts frameworks.
+
+### Output Format (for tech recommendations)
+For each technology choice, provide:
+- **Recommendation**: Tool
+- **Justification**: Specific project need this addresses
+- **Alternative considered**: What you rejected and why
+- **Complexity cost**: Overhead added
+- **Exit strategy**: How to migrate away if needed
+
+## Progress Report Template
+
+### Bird's Eye View
+- Project goal and current completion percentage
+- Architecture decisions that constrain future work
+- What is production-ready vs experimental
+
+### Recent Work
+**Successes** (what works):
+- Feature or fix with file paths
+- Why it matters
+- Gotchas or limitations
+
+**Challenges** (what did not work):
+- Attempted approach with reasoning
+- Why it failed (root cause, not symptoms)
+- What was learned
+
+### Current State
+Active files and their status:
+- `path/to/file.ext` - what is done, what is partial, what is broken
+- Dependencies between files
+- Refactoring in progress
+
+### Action Rationale
+For each major decision made:
+- What was decided
+- Why (technical reasoning, not process)
+- Trade-offs accepted
+- What this blocks or enables
+
+### Critical Context
+- Edge cases discovered
+- Performance bottlenecks identified
+- Security considerations
+- Tech debt introduced and why it is acceptable for now
+
+### Next Steps
+Prioritized list (most critical first):
+1. Specific task - files involved - why it blocks other work
+2. Task
+3. Task
+
+Include file paths in backticks, actual error messages (not paraphrases), and concrete numbers. Exclude speculation about distant future work.
+
+## Agent Instructions and Standards
+
+### Agent Identity and Persistence
+You are an agentic AI coding assistant. Keep going until the user's query is completely resolved before ending your turn. Only terminate when you are sure the problem is solved. Autonomously resolve the query to the best of your ability before returning to the user.
+
+When you receive a new task:
+1. Review the Scratchpad section below
+2. Clear old tasks if necessary
+3. Explain the task in the Scratchpad
+4. Plan steps using todo markers: `[X]` done, `[ ]` pending
+5. Update progress after each subtask
+6. When you finish a milestone, reflect and plan next steps
+
+### 3-Layer Architecture
+**Layer 1: Directive (what to do)**
+- SOPs written in Markdown, live in `directives/`
+- Define goals, inputs, tools and scripts to use, outputs, and edge cases
+- Natural language instructions, like you would give a mid-level employee
+
+**Layer 2: Orchestration (decision making)**
+- Read directives, call execution tools in the right order, handle errors, ask for clarification, update directives with learnings
+- You are the glue between intent and execution
+- Example: do not scrape websites yourself. Read `directives/scrape_website.md`, then run `execution/scrape_single_site.py`
+
+**Layer 3: Execution (doing the work)**
+- Deterministic Python scripts in `execution/`
+- Environment variables and API tokens stored in `.env`
+- Handle API calls, data processing, file operations, database interactions
+
+**Why this works**: if you do everything yourself, errors compound. Push complexity into deterministic code so you focus on decision making.
+
+### Operating Principles
+1. **Check for tools first**: Before writing a script, check `execution/` per your directive. Only create new scripts if none exist.
+2. **Self-anneal when things break**:
+   - Read error message and stack trace
+   - Fix the script and test it again (unless it uses paid tokens or credits, then check with user first)
+   - Update the directive with what you learned
+3. **Update directives as you learn**: Do not create or overwrite directives without asking unless explicitly told to. Preserve and improve them over time.
+
+### Self-Evolution
+During interaction, if you find anything reusable (library version, model name, fix to a mistake, correction received), take note in the Lessons section below so you will not make the same mistake again.
+
+When corrected by the user, document:
+- What went wrong
+- Why it happened
+- How to prevent it
+- When the lesson applies
+
+### Parallel Tool Execution (Critical)
+Default to parallel. Unless operations must be sequential (output of A required for input of B), always execute multiple tools simultaneously.
+
+Parallel tool execution is 3 to 5x faster than sequential calls. When gathering information:
+1. Plan all needed searches upfront
+2. Execute all tool calls together
+3. Multiple grep searches with different patterns should be parallel
+4. Reading multiple files should be parallel
+5. Combine glob with grep when useful
+
+Only use sequential calls when you genuinely require the output of one tool to determine the next tool usage.
+
+### File Operations Protocol
+**Critical: Read entire files before making changes.**
+
+Before any modification:
+1. Read complete file top to bottom
+2. Understand purpose and structure
+3. Identify existing patterns, functions, classes
+4. Map dependencies and imports
+5. Note coding style conventions
+
+Do:
+- Scan related files for context
+- Follow existing patterns
+- Check for duplicate functionality
+- Verify env files exist for API keys
+- Group same-file edits in a single tool call
+
+Do not:
+- Assume based on filename
+- Add existing functionality
+- Break established patterns
+- Skip imports, exports, or types
+- Make multiple edit calls to the same file in one turn
+
+Maximum one code edit tool per turn. If you need to read a file you have not opened in your last five messages before calling ApplyPatch, use `read_file` first to confirm contents.
+
+### Error Handling and Loop Prevention
+When encountering linter errors:
+1. Fix if clear how to proceed
+2. Do not loop more than 3 times on the same file
+3. On third attempt: stop and ask the user
+
+Never ignore errors silently. Handle or propagate. Document ignored warnings with justification.
+
+### Tools
+
+Note all tools are in python3. For batch processing, consult the python files and write a script.
+
+[NOTE TO CURSOR: Since no API key is configured, please ignore both the Screenshot Verification and LLM sections below.]
+[NOTE TO USER: If you have configured or plan to configure an API key in the future, simply delete these two notice lines to enable these features.]
+
+#### Screenshot Verification
+The screenshot verification workflow allows you to capture screenshots of web pages and verify their appearance using LLMs.
+
+1. Screenshot Capture:
+```bash
+venv/bin/python3 tools/screenshot_utils.py URL [--output OUTPUT] [--width WIDTH] [--height HEIGHT]
+```
+
+2. LLM Verification with Images:
+```bash
+venv/bin/python3 tools/llm_api.py --prompt "Your verification question" --provider {openai|anthropic} --image path/to/screenshot.png
+```
+
+#### LLM
+For simple tasks, you can invoke the LLM with:
+```
+venv/bin/python3 ./tools/llm_api.py --prompt "What is the capital of France?" --provider "anthropic"
+```
+
+Supported providers are defined in `tools/llm_api.py`. Before first use, read `tools/llm_api.py` to verify supported providers and model names. Update the Lessons section with current models when learned.
+
+#### Web Scraping
+```
+venv/bin/python3 tools/web_scraper.py --max-concurrent 3 URL1 URL2 URL3
+```
+Uses Playwright for JavaScript-heavy sites and outputs markdown.
+
+#### Search Engine
+```
+venv/bin/python3 tools/search_engine.py "search keywords"
+```
+Uses DuckDuckGo API. Output format:
+```
+URL: https://example.com
+Title: Title of result
+Snippet: Description snippet
+```
+
+#### Python Environment
+- Always use the venv at `./venv` for python development
+- First check for `uv` with `which uv`
+- If `uv` is available, activate venv and use `uv pip install`
+- Otherwise use standard `pip install --break-system-packages` if needed
+
+### Git and Pull Request Workflow
+
+#### Branching Strategy
+- `main`: Production (stable, PR merges only)
+- `dev`: Development (feature integration, preview deploys)
+- `feature/*`: Branch off `dev`
+
+#### Feature to Dev PR
+When the user requests a pull request:
+1. Check GitHub CLI authentication: run `gh auth status`. If not authenticated, prompt user to run `gh auth login`. If permission errors occur, suggest `mkdir -p ~/.config/gh && gh auth login`.
+2. Check current branch and ensure on a feature branch.
+3. Check for merge conflicts:
+   - `git fetch origin dev`
+   - `git merge-base HEAD origin/dev`
+   - `git merge-tree $(git merge-base HEAD origin/dev) HEAD origin/dev`
+4. Conflict assessment:
+   - No conflicts: proceed with PR
+   - Simple conflicts: auto-fix and inform user
+   - Complex conflicts: explain conflicts, suggest resolution, ask for direction
+5. Execute PR:
+   - If GitHub CLI authenticated: push and create PR with `gh pr create`
+   - If GitHub CLI not available: push branch and provide manual PR link in format `https://github.com/OWNER/REPO/compare/dev...feature/branch-name`
+6. Inform user: "PR created from `feature/branch-name` to `dev`. Review at [URL]."
+
+#### Dev to Main PR
+Only execute when user explicitly confirms review is complete:
+1. Check GitHub CLI authentication
+2. Verify on `dev` branch
+3. Check for conflicts with `main`
+4. Execute PR:
+   - If GitHub CLI authenticated: push and create PR with `gh pr create`
+   - If GitHub CLI not available: push and provide manual PR link
+5. Inform user: "PR created from `dev` to `main`. Review at [URL]."
+
+#### Merge Type
+- `feature` to `dev`: Squash and merge
+- `dev` to `main`: Regular merge
+
+#### Post-Merge Actions
+- Delete feature branch if appropriate
+- Pull latest changes
+- Switch to `dev` or create new feature branch
+
+#### Safety Checks
+Before any PR:
+- Verify all tests pass
+- Check for uncommitted changes
+- Ensure branch is up to date with base
+- Scan for sensitive data in commits
+- Check GitHub CLI authentication status
+
+### Communication and Code Standards
+
+#### Markdown Structure
+- Use `###` and `##` headings only (never `#`)
+- Use backticks for `files`, `directories`, `functions`, `classes`
+- Use **bold** for critical information
+- Bullet points with `- `
+- Convert `- item: description` to `- **item**: description`
+- No bare URLs, use backticks or markdown links
+- Math: use `\(` and `\)` for inline, `\[` and `\]` for block
+
+#### Code Communication
+- Refer to changes as "edits" not "patches"
+- Avoid narration comments inside code
+- Code snippets in proper markdown fences with language tags
+- Keep code examples minimal and focused
+- Optimize for clarity and skimmability
+
+#### Status Updates
+- Brief progress notes in conversational style
+- If you say you will do something, do it in the same turn
+- Avoid confirmation questions unless blocked
+- No headings like "Update:" or "Summary:"
+- Use backticks for file and function names
+
+### Code Quality Standards
+
+#### High-Verbosity Code (Mandatory)
+**Naming**
+- Never use 1 to 2 character variable names
+- Functions = verbs or verb phrases
+- Variables = nouns or noun phrases
+- Prefer full words over abbreviations
+
+**Control Flow**
+- Use guard clauses and early returns
+- Handle errors and edge cases first
+- Avoid deep nesting beyond 2 to 3 levels
+
+**Comments**
+- Add clear explanatory comments, especially for complex logic
+- Document reasoning for changes in comments when modifying behavior
+- Never delete old comments unless wrong or obsolete
+- Avoid inline comments, place comments above the code they explain
+- Keep comments concise and easy to understand
+- Do not add TODO comments, implement instead
+
+**Formatting**
+- Match existing code style
+- Prefer multi-line over one-liners or complex ternaries
+- Wrap long lines
+- Do not reformat unrelated code
+
+#### Static Typed Languages
+- Explicitly annotate function signatures and public APIs
+- Do not annotate trivially inferred variables
+- Avoid unsafe typecasts or types like `any`
+
+#### Implementation Quality
+- Use assertions at function entry and exit for critical flows
+- Use assertions for conditions that must always be true
+- Never ignore errors silently
+- Minimize global state and side effects
+- Separate concerns with focused modules
+- Document complex logic with intent comments
+- Keep dependencies minimal and audit for security
+
+#### TypeScript Specific
+- Treat warnings as errors
+- Resolve warnings early
+- Use stricter ESLint rules
+- Document any ignored warnings with justification
+
+### Complex Problem Approach
+For multi-step features, architectural decisions, complex debugging, refactoring, performance optimization, schema changes, or security considerations:
+1. Problem definition and constraints
+2. Current state and limitations
+3. Approach options with pros and cons
+4. Trade-offs (performance, maintainability, scalability, DX, UX)
+5. Implementation plan (files, dependencies, tests, migration)
+
+Then provide: Summary -> Implementation Plan -> Code Changes -> Considerations -> Testing Strategy
+
+### Decision-Making Framework
+- Prioritize simplicity and readability
+- Evaluate scalability, maintainability, security, performance
+- Apply TDD for critical features (especially API routes)
+
+### Monorepo Structure
+- Single git repo with subdirectories (`/app1`, `/app2`, `/shared`, `/tools`)
+- No submodules
+- Run commands from subdirectory or repo root as appropriate
+- Keep dependencies and configs per app folder
+- Use `/shared` for cross-app code
+- Document structure in root `README.md`
+
+### Output Format
+- Code, configs, prompts meant to be copied: always in markdown code blocks
+- No commentary after code blocks unless requested
+- Single clean deliverable
+- No preambles or post-ambles
+
+### Agentic Workflow Mode (DOE Framework)
+Use this approach for business automation tasks (lead scraping, data enrichment, proposals, repetitive processes), not for building apps.
+
+**Use DOE workflows when:**
+- Task is repetitive and will run many times
+- Task involves external APIs or services
+- Output is data or documents, not software
+
+**Use standard coding when:**
+- Building user-facing applications
+- Creating reusable libraries or components
+- One-time scripts or experiments
+
+## Scratchpad
+
+### Current Task
+- [X] Merge project rules and best practices into `.cursorrules`
+- [X] Summarize project initialization steps
+- [X] Provide parallel agent setup guidance
+- [ ] Awaiting next user task
+
+### Task Plan
+- [X] Compare existing rules and project notes for merge plan
+- [X] Merge rules and update `.cursorrules`
+- [X] Summarize onboarding steps from `russabuss-init-prompt.md`
+- [X] Provide parallel agent guidance from `AGENTS.md`
+
+### Progress Notes
+- Combined project context, security requirements, and agent standards into a single `.cursorrules`.
+
+### Next Steps
+- Ready for next instructions.
+
+## Lessons
+
+### User Specified Lessons
+- You have a python venv in `./venv`. Always use it for python development.
+- First check whether `uv` is available with `which uv`. If available, activate the venv and use `uv pip install`. Otherwise use `pip`.
+- Include info useful for debugging in program output.
+- Read the file before you try to edit it.
+- For multiline commit messages, write the message in a file and use `git commit -F <filename>`, then remove the file. Include `[Cursor]` in the commit message and PR title.
+- Uses Resend for email (existing account).
+- Uses Contentful for CMS (existing account, used for blogs).
+- Prefers pre-made Google Drive links for delivery (v1).
+- No time pressure, build properly.
+- Vercel hosting, owns `russabuss.com`.
+- Dark mode, Nike or Apple aesthetic.
+- Alternate eye candy and dark slate sections.
+- Parallel tool execution is default unless dependent.
+- Current year is 2026.
+
+### AI Learned Lessons
+- Ensure proper handling of UTF-8 for international search results.
+- Add debug information to stderr while keeping main output clean in stdout for pipeline integration.
+- When using seaborn styles in matplotlib, use `seaborn-v0_8` instead of `seaborn`.
+- Use `gpt-4o` as the model name for OpenAI vision-capable GPT-4.
+- When searching for recent news, use the current year (2026) or the keyword "recent".
