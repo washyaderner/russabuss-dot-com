@@ -1,0 +1,221 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Create Account" description="Create a Russabuss account to purchase beats, sample packs, and access exclusive content.">
+  <section class="auth-page">
+    <div class="auth-container">
+      <h1>Create Account</h1>
+      <p class="auth-subtitle">Join to access beats, sample packs, and more</p>
+
+      <form method="POST" action="/api/auth/register" class="auth-form" novalidate>
+        <input type="hidden" name="csrf_token" value="" />
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            autocomplete="email"
+            aria-required="true"
+            required
+            placeholder="you@example.com"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="new-password"
+            aria-required="true"
+            required
+            minlength="12"
+            placeholder="••••••••••••"
+          />
+          <span class="helper-text">Minimum 12 characters with letters, numbers, and symbols</span>
+        </div>
+
+        <div class="form-group">
+          <label for="confirm-password">Confirm Password</label>
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirm_password"
+            autocomplete="new-password"
+            aria-required="true"
+            required
+            placeholder="••••••••••••"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              name="terms"
+              aria-required="true"
+              required
+            />
+            <span>I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a></span>
+          </label>
+        </div>
+
+        <div class="form-errors" aria-live="polite" role="alert"></div>
+
+        <button type="submit" class="btn-primary">Create Account</button>
+      </form>
+
+      <p class="auth-footer">
+        Already have an account? <a href="/login">Sign in</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .auth-page {
+    min-height: calc(100vh - 160px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8) var(--space-4);
+    background: var(--gradient-slate);
+  }
+
+  .auth-container {
+    width: 100%;
+    max-width: 420px;
+    padding: var(--space-8);
+    background-color: var(--color-bg-elevated);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+  }
+
+  h1 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--space-2);
+    text-align: center;
+  }
+
+  .auth-subtitle {
+    color: var(--color-text-secondary);
+    text-align: center;
+    margin-bottom: var(--space-8);
+  }
+
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .form-group label {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  .form-group input[type="email"],
+  .form-group input[type="password"] {
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-bg-slate);
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-base);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .form-group input[type="email"]::placeholder,
+  .form-group input[type="password"]::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .form-group input[type="email"]:focus,
+  .form-group input[type="password"]:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgb(99 102 241 / 0.2);
+  }
+
+  .helper-text {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    color: var(--color-text-secondary);
+  }
+
+  .checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    accent-color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .checkbox-label a {
+    color: var(--color-accent);
+  }
+
+  .checkbox-label a:hover {
+    color: var(--color-accent-hover);
+  }
+
+  .form-errors:empty {
+    display: none;
+  }
+
+  .form-errors {
+    padding: var(--space-3);
+    background-color: rgb(239 68 68 / 0.1);
+    border: 1px solid rgb(239 68 68 / 0.3);
+    border-radius: var(--radius-md);
+    color: #f87171;
+    font-size: var(--font-size-sm);
+  }
+
+  .btn-primary {
+    padding: var(--space-3) var(--space-6);
+    background: var(--color-accent);
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-accent-hover);
+  }
+
+  .btn-primary:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgb(99 102 241 / 0.4);
+  }
+
+  .auth-footer {
+    margin-top: var(--space-6);
+    text-align: center;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
+</style>

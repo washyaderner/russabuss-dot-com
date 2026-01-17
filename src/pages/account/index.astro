@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Account" description="Manage your Russabuss account, view order history, and access your purchases.">
+  <section class="dashboard-page">
+    <div class="dashboard-container">
+      <header class="dashboard-header">
+        <h1>Your Account</h1>
+        <form method="POST" action="/api/auth/logout" class="logout-form">
+          <button type="submit" class="btn-logout">Sign Out</button>
+        </form>
+      </header>
+
+      <div class="dashboard-content">
+        <section class="dashboard-section" aria-labelledby="orders-heading">
+          <h2 id="orders-heading">Order History</h2>
+          <div class="empty-state">
+            <p>No orders yet</p>
+            <a href="/beats" class="btn-secondary">Browse Beats</a>
+          </div>
+        </section>
+
+        <section class="dashboard-section" aria-labelledby="downloads-heading">
+          <h2 id="downloads-heading">Your Downloads</h2>
+          <div class="empty-state">
+            <p>Your purchased files will appear here</p>
+          </div>
+        </section>
+
+        <section class="dashboard-section" aria-labelledby="settings-heading">
+          <h2 id="settings-heading">Account Settings</h2>
+          <div class="settings-placeholder">
+            <p class="coming-soon">Account settings coming soon</p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .dashboard-page {
+    min-height: calc(100vh - 160px);
+    padding: var(--space-8) var(--space-4);
+    background: var(--gradient-slate);
+  }
+
+  .dashboard-container {
+    width: 100%;
+    max-width: var(--container-lg);
+    margin: 0 auto;
+  }
+
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-bg-slate);
+  }
+
+  .dashboard-header h1 {
+    font-size: var(--font-size-3xl);
+    margin: 0;
+  }
+
+  .logout-form {
+    margin: 0;
+  }
+
+  .btn-logout {
+    padding: var(--space-2) var(--space-4);
+    background: transparent;
+    border: 1px solid var(--color-text-muted);
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .btn-logout:hover {
+    border-color: var(--color-text-primary);
+    color: var(--color-text-primary);
+  }
+
+  .btn-logout:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgb(99 102 241 / 0.4);
+  }
+
+  .dashboard-content {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .dashboard-section {
+    padding: var(--space-6);
+    background-color: var(--color-bg-elevated);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .dashboard-section h2 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-bg-slate);
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-8) var(--space-4);
+    text-align: center;
+  }
+
+  .empty-state p {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base);
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    padding: var(--space-2) var(--space-5);
+    background: transparent;
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-md);
+    color: var(--color-accent);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-accent);
+    color: var(--color-text-primary);
+  }
+
+  .btn-secondary:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgb(99 102 241 / 0.4);
+  }
+
+  .settings-placeholder {
+    padding: var(--space-4);
+  }
+
+  .coming-soon {
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  @media (min-width: 768px) {
+    .dashboard-content {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-section:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+</style>
