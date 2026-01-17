@@ -1,0 +1,191 @@
+---
+// Footer component for russabuss.com
+// Contains contact info, Bitcoin tip address, and ENS/SOL addresses
+---
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <h2 class="footer-title">Russ A Buss</h2>
+      <p class="footer-tagline">Your audio deserves the best treatment</p>
+    </div>
+
+    <div class="footer-tip">
+      <p class="tip-label">Tip Russ in Bitcoin:</p>
+      <code class="bitcoin-address">33KK4NduUZLJHsNXV5KWbgpvfzSvcLGgoK</code>
+    </div>
+
+    <div class="footer-qr">
+      <!-- LinkTree QR Code placeholder -->
+      <div class="qr-placeholder" aria-label="LinkTree QR Code">
+        <span class="qr-text">LinkTree QR</span>
+      </div>
+    </div>
+
+    <div class="footer-contact">
+      <h3 class="contact-heading">Contact:</h3>
+      <ul class="contact-list">
+        <li>
+          <a href="tel:+15037345502" class="contact-link">(503) 734-5502</a>
+        </li>
+        <li>
+          <a href="mailto:audio@russabuss.com" class="contact-link">audio@russabuss.com</a>
+        </li>
+        <li>
+          <span class="web3-address">russabuss.eth</span>
+        </li>
+        <li>
+          <span class="web3-address">russabuss.sol</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-bg-primary, #0a0a0a);
+    border-top: 1px solid var(--color-bg-elevated, #1a1a1a);
+    padding: 3rem 1.5rem;
+    color: var(--color-text-primary, #ffffff);
+  }
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+
+  .footer-tagline {
+    font-size: 1rem;
+    color: var(--color-text-secondary, #a0a0a0);
+    margin: 0;
+  }
+
+  .footer-tip {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .tip-label {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary, #a0a0a0);
+    margin: 0;
+  }
+
+  .bitcoin-address {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.75rem;
+    background: var(--color-bg-elevated, #1a1a1a);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    word-break: break-all;
+    max-width: 100%;
+  }
+
+  .footer-qr {
+    padding: 1rem;
+  }
+
+  .qr-placeholder {
+    width: 120px;
+    height: 120px;
+    background: var(--color-bg-elevated, #1a1a1a);
+    border: 1px dashed var(--color-text-muted, #666666);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .qr-text {
+    font-size: 0.75rem;
+    color: var(--color-text-muted, #666666);
+  }
+
+  .footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .contact-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contact-link {
+    color: var(--color-text-primary, #ffffff);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .contact-link:hover,
+  .contact-link:focus {
+    color: var(--color-accent, #6366f1);
+    outline: none;
+  }
+
+  .contact-link:focus-visible {
+    outline: 2px solid var(--color-accent, #6366f1);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .web3-address {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.875rem;
+    color: var(--color-text-secondary, #a0a0a0);
+  }
+
+  @media (min-width: 768px) {
+    .footer-content {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .footer-brand {
+      flex: 1 1 250px;
+    }
+
+    .footer-tip {
+      align-items: flex-start;
+    }
+
+    .footer-contact {
+      flex: 0 0 auto;
+    }
+  }
+</style>
