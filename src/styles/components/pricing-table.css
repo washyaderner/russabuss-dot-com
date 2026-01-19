@@ -68,32 +68,39 @@
   color: var(--color-accent);
 }
 
+/* Base: Carousel (Mobile first up to 1280px) */
 .pricing-grid-react {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
   gap: 1.5rem;
+  padding: 1rem 1rem 3rem 1rem; /* Bottom padding for shadows/hover lift */
+  margin: 0 -1rem; /* Bleed out to edges */
+  scroll-padding-left: 1rem; /* Snap align with padding */
+  -webkit-overflow-scrolling: touch;
   max-width: 1400px;
-  margin: 0 auto;
 }
 
-/* Desktop: 2x2 on smaller screens, 4x1 on large */
-@media (min-width: 1024px) {
-  .pricing-grid-react {
-    grid-template-columns: repeat(2, 1fr);
-  }
+/* Hide scrollbar for cleaner look */
+.pricing-grid-react::-webkit-scrollbar {
+  display: none;
+}
+.pricing-grid-react {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
-@media (min-width: 1280px) {
-  .pricing-grid-react {
-    grid-template-columns: repeat(4, 1fr);
-    align-items: center; /* Center vertically for scale effects */
-  }
-}
-
+/* Carousel Item Sizing */
 .pricing-card-react {
+  min-width: 280px;
+  max-width: 320px;
+  scroll-snap-align: center;
+  flex-shrink: 0;
+  
+  /* Existing styles */
   background: var(--color-bg-primary);
   border: 1px solid var(--color-bg-slate);
-  border-radius: 1.5rem; /* Match rounded-2xl */
+  border-radius: 1.5rem;
   padding: 2rem;
   position: relative;
   display: flex;
@@ -103,9 +110,26 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
+/* Desktop: Grid (When space allows, 4 columns) */
+@media (min-width: 1280px) {
+  .pricing-grid-react {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    overflow-x: visible;
+    margin: 0 auto;
+    padding: 0;
+    gap: 2rem;
+  }
+  
+  .pricing-card-react {
+    min-width: 0;
+    max-width: none;
+    scroll-snap-align: none;
+  }
+}
+
 .pricing-card-react.popular {
   border: 2px solid var(--color-accent);
-  /* Cyan/Blue glow for popular item */
   box-shadow: 0 0 40px rgba(14, 116, 144, 0.15); 
   background: linear-gradient(to bottom, var(--color-bg-secondary), var(--color-bg-primary));
   z-index: 10;

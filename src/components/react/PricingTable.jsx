@@ -25,7 +25,8 @@ export function PricingTable({
   showToggle = false
 }) {
   const [isMonthly, setIsMonthly] = useState(true);
-  const isDesktop = useMediaQuery("(min-width: 1024px)");
+  // Switch to 1280px for desktop grid layout (4 columns)
+  const isDesktop = useMediaQuery("(min-width: 1280px)");
   const switchRef = useRef(null);
 
   const handleToggle = (e) => {
@@ -89,10 +90,6 @@ export function PricingTable({
 
       <div className="pricing-grid-react">
         {plans.map((plan, index) => {
-          // Calculate layout props for 4 items:
-          // We can't do the exact 3-card fan, but we can highlight the Popular one.
-          // Assuming 4 columns on desktop.
-          
           return (
             <motion.div
               key={index}
