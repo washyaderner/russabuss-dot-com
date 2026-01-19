@@ -31,25 +31,25 @@
 
 @property --color-2 {
   syntax: '<color>';
-  initial-value: #08012c;
+  initial-value: #0f172a;
   inherits: false;
 }
 
 @property --color-3 {
   syntax: '<color>';
-  initial-value: #4e1e40;
+  initial-value: #0e7490;
   inherits: false;
 }
 
 @property --color-4 {
   syntax: '<color>';
-  initial-value: #70464e;
+  initial-value: #1e3a8a;
   inherits: false;
 }
 
 @property --color-5 {
   syntax: '<color>';
-  initial-value: #88394c;
+  initial-value: #1d4ed8;
   inherits: false;
 }
 
@@ -168,14 +168,14 @@
   --pos-y: 91.51%;
   --spread-x: 120.24%;
   --spread-y: 103.18%;
-  --color-1: #c96287;
-  --color-2: #c66c64;
-  --color-3: #cc7d23;
-  --color-4: #37140a;
+  --color-1: #0891b2;
+  --color-2: #0284c7;
+  --color-3: #4f46e5;
+  --color-4: #0f172a;
   --color-5: #000;
   --border-angle: 190deg;
-  --border-color-1: hsla(340, 78%, 90%, 0.1);
-  --border-color-2: hsla(340, 75%, 90%, 0.6);
+  --border-color-1: hsla(200, 78%, 90%, 0.1);
+  --border-color-2: hsla(200, 75%, 90%, 0.6);
   --stop-1: 0%;
   --stop-2: 8.8%;
   --stop-3: 21.44%;

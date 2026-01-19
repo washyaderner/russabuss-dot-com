@@ -72,19 +72,14 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
-@media (min-width: 768px) {
-  .pricing-grid-react {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
+/* Desktop: all 4 cards in a single row (1x4) */
 @media (min-width: 1024px) {
   .pricing-grid-react {
-    grid-template-columns: repeat(3, 1fr); /* Or 4 if needed */
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
