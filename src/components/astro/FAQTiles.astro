@@ -1,0 +1,184 @@
+---
+// FAQTiles component for russabuss.com homepage
+// 4 FAQ cards with common questions
+
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
+const faqs: FAQ[] = [
+  {
+    question: 'What do I get with a beat lease?',
+    answer: 'You receive high-quality audio files (format depends on license tier), the right to use the beat for your own commercial releases, and a license agreement outlining your usage terms. The beat remains available for others unless you purchase exclusive rights.',
+  },
+  {
+    question: 'How long does mixing/mastering take?',
+    answer: 'Standard turnaround is 3-5 business days per track. Rush orders are available for an additional fee. Complex projects with many stems or revisions may require additional time. I\'ll provide an accurate estimate after reviewing your project.',
+  },
+  {
+    question: 'Do you offer revisions?',
+    answer: 'Yes! All mixing and mastering packages include 2 rounds of revisions. Beat leases are delivered as-is, but exclusive purchases can include custom modifications. I want you 100% happy with the final product.',
+  },
+  {
+    question: 'How do I book studio time?',
+    answer: 'Use the contact form or email me directly at audio@russabuss.com. Let me know what you need (recording, mixing session, production), your preferred dates, and any special requirements. I\'ll get back to you within 24 hours.',
+  },
+];
+---
+
+<section class="faq" aria-labelledby="faq-heading">
+  <div class="faq-container">
+    <div class="faq-header">
+      <h2 id="faq-heading" class="faq-title">Common Questions</h2>
+      <p class="faq-subtitle">Quick answers to help you get started</p>
+    </div>
+
+    <div class="faq-grid">
+      {faqs.map((faq, index) => (
+        <article class="faq-card">
+          <div class="faq-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</div>
+          <h3 class="faq-question">{faq.question}</h3>
+          <p class="faq-answer">{faq.answer}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="faq-cta">
+      <p class="faq-cta-text">Have more questions?</p>
+      <a href="/contact" class="faq-cta-link">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    background: var(--gradient-slate, linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%));
+    padding: var(--space-20, 5rem) var(--space-4, 1rem);
+  }
+
+  .faq-container {
+    max-width: var(--container-xl, 1280px);
+    margin: 0 auto;
+  }
+
+  .faq-header {
+    text-align: center;
+    margin-bottom: var(--space-12, 3rem);
+  }
+
+  .faq-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: var(--color-text-primary, #ffffff);
+    margin: 0 0 var(--space-4, 1rem);
+  }
+
+  .faq-subtitle {
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: var(--font-size-lg, 1.125rem);
+    color: var(--color-text-secondary, #a0a0a0);
+    margin: 0;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6, 1.5rem);
+    margin-bottom: var(--space-12, 3rem);
+  }
+
+  .faq-card {
+    background: var(--color-bg-secondary, #141414);
+    border-radius: var(--radius-lg, 0.75rem);
+    padding: var(--space-6, 1.5rem);
+    position: relative;
+  }
+
+  .faq-number {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: var(--font-size-xs, 0.75rem);
+    color: var(--color-accent, #6366f1);
+    margin-bottom: var(--space-3, 0.75rem);
+    letter-spacing: 0.1em;
+  }
+
+  .faq-question {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: var(--font-size-lg, 1.125rem);
+    font-weight: 600;
+    color: var(--color-text-primary, #ffffff);
+    margin: 0 0 var(--space-3, 0.75rem);
+    line-height: 1.4;
+  }
+
+  .faq-answer {
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: var(--font-size-sm, 0.875rem);
+    color: var(--color-text-secondary, #a0a0a0);
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  .faq-cta {
+    text-align: center;
+    padding: var(--space-8, 2rem);
+    background: var(--color-bg-secondary, #141414);
+    border-radius: var(--radius-xl, 1rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4, 1rem);
+  }
+
+  .faq-cta-text {
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: var(--font-size-lg, 1.125rem);
+    color: var(--color-text-primary, #ffffff);
+    margin: 0;
+  }
+
+  .faq-cta-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3, 0.75rem) var(--space-8, 2rem);
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: var(--font-size-base, 1rem);
+    font-weight: 600;
+    color: var(--color-text-primary, #ffffff);
+    background: var(--color-accent, #6366f1);
+    border-radius: var(--radius-md, 0.5rem);
+    text-decoration: none;
+    transition: all var(--transition-base, 250ms ease);
+  }
+
+  .faq-cta-link:hover,
+  .faq-cta-link:focus {
+    background: var(--color-accent-hover, #818cf8);
+    transform: translateY(-2px);
+  }
+
+  .faq-cta-link:focus-visible {
+    outline: 2px solid var(--color-accent, #6366f1);
+    outline-offset: 2px;
+  }
+
+  @media (min-width: 640px) {
+    .faq-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .faq-cta {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .faq-card {
+      padding: var(--space-8, 2rem);
+    }
+  }
+</style>

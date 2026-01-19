@@ -1,0 +1,205 @@
+---
+// ServicesGrid component for russabuss.com homepage
+// 6 service cards: Mix & Master, Custom Tracks, Beats, Studio Time, Vocals, DJ
+
+interface Service {
+  title: string;
+  description: string;
+  icon: string;
+  href: string;
+}
+
+const services: Service[] = [
+  {
+    title: 'Mix & Master',
+    description: 'Professional mixing and mastering to make your tracks radio-ready with clarity, punch, and polish.',
+    icon: '🎛️',
+    href: '/services#mixing',
+  },
+  {
+    title: 'Custom Production',
+    description: 'Original instrumentals crafted to your vision. From concept to completion, tailored to your sound.',
+    icon: '🎹',
+    href: '/services#production',
+  },
+  {
+    title: 'Beat Licensing',
+    description: 'Browse the catalog and lease beats instantly. MP3, WAV, trackouts, or exclusive rights available.',
+    icon: '🎵',
+    href: '/beats',
+  },
+  {
+    title: 'Studio Sessions',
+    description: 'Book time in a professional environment with engineering support. Recording, mixing, or production.',
+    icon: '🎙️',
+    href: '/services#studio',
+  },
+  {
+    title: 'Vocal Production',
+    description: 'Recording, tuning, editing, and processing to get your vocals sitting perfectly in the mix.',
+    icon: '🎤',
+    href: '/services#vocals',
+  },
+  {
+    title: 'DJ Services',
+    description: 'Live sets, events, and curated playlists. From intimate gatherings to large venues.',
+    icon: '💿',
+    href: '/services#dj',
+  },
+];
+---
+
+<section class="services" aria-labelledby="services-heading">
+  <div class="services-container">
+    <div class="services-header">
+      <h2 id="services-heading" class="services-title">What I Do</h2>
+      <p class="services-intro">
+        Each project I take on has different needs, and I want to make sure you're 100% happy with the final copy. Here's how I can help.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      {services.map((service) => (
+        <a href={service.href} class="service-card">
+          <span class="service-icon" aria-hidden="true">{service.icon}</span>
+          <h3 class="service-title">{service.title}</h3>
+          <p class="service-description">{service.description}</p>
+          <span class="service-arrow" aria-hidden="true">→</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    background: var(--color-bg-primary, #0a0a0a);
+    padding: var(--space-20, 5rem) var(--space-4, 1rem);
+  }
+
+  .services-container {
+    max-width: var(--container-xl, 1280px);
+    margin: 0 auto;
+  }
+
+  .services-header {
+    text-align: center;
+    margin-bottom: var(--space-12, 3rem);
+  }
+
+  .services-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: var(--color-text-primary, #ffffff);
+    margin: 0 0 var(--space-4, 1rem);
+  }
+
+  .services-intro {
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: var(--font-size-lg, 1.125rem);
+    color: var(--color-text-secondary, #a0a0a0);
+    margin: 0;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6, 1.5rem);
+  }
+
+  .service-card {
+    position: relative;
+    background: var(--color-bg-secondary, #141414);
+    border: 1px solid var(--color-bg-elevated, #1a1a1a);
+    border-radius: var(--radius-lg, 0.75rem);
+    padding: var(--space-8, 2rem);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition: all var(--transition-base, 250ms ease);
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-futuristic, linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%));
+    opacity: 0;
+    transition: opacity var(--transition-base, 250ms ease);
+  }
+
+  .service-card:hover,
+  .service-card:focus {
+    border-color: var(--color-accent, #6366f1);
+    transform: translateY(-4px);
+  }
+
+  .service-card:hover::before,
+  .service-card:focus::before {
+    opacity: 0.05;
+  }
+
+  .service-card:focus-visible {
+    outline: 2px solid var(--color-accent, #6366f1);
+    outline-offset: 2px;
+  }
+
+  .service-icon {
+    position: relative;
+    font-size: 2rem;
+    margin-bottom: var(--space-4, 1rem);
+    z-index: 1;
+  }
+
+  .service-title {
+    position: relative;
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: var(--font-size-xl, 1.25rem);
+    font-weight: 600;
+    color: var(--color-text-primary, #ffffff);
+    margin: 0 0 var(--space-3, 0.75rem);
+    z-index: 1;
+  }
+
+  .service-description {
+    position: relative;
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: var(--font-size-sm, 0.875rem);
+    color: var(--color-text-secondary, #a0a0a0);
+    margin: 0;
+    line-height: 1.6;
+    flex: 1;
+    z-index: 1;
+  }
+
+  .service-arrow {
+    position: relative;
+    font-size: var(--font-size-xl, 1.25rem);
+    color: var(--color-accent, #6366f1);
+    margin-top: var(--space-4, 1rem);
+    transition: transform var(--transition-fast, 150ms ease);
+    z-index: 1;
+  }
+
+  .service-card:hover .service-arrow {
+    transform: translateX(4px);
+  }
+
+  @media (min-width: 640px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

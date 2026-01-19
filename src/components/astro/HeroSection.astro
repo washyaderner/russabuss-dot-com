@@ -1,0 +1,189 @@
+---
+// HeroSection component for russabuss.com homepage
+// Displays hero headline with gradient background
+// Future: Add GSAP animations and Three.js 3D visuals
+---
+
+<section class="hero" aria-labelledby="hero-headline">
+  <div class="hero-background">
+    <div class="hero-gradient"></div>
+  </div>
+  <div class="hero-content">
+    <h1 id="hero-headline" class="hero-headline">
+      <span class="hero-line">Beats.</span>
+      <span class="hero-line">Mixing.</span>
+      <span class="hero-line">Mastering.</span>
+    </h1>
+    <p class="hero-tagline">Your sound, elevated.</p>
+    <div class="hero-cta">
+      <a href="/beats" class="cta-primary">Browse Beats</a>
+      <a href="/services" class="cta-secondary">View Services</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-gradient {
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-hero, linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%));
+  }
+
+  /* Subtle animated gradient overlay */
+  .hero-gradient::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at 50% 50%,
+      rgba(99, 102, 241, 0.15) 0%,
+      transparent 60%
+    );
+    animation: pulse 8s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: var(--space-8, 2rem);
+    max-width: var(--container-lg, 1024px);
+  }
+
+  .hero-headline {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(2.5rem, 10vw, 6rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 var(--space-6, 1.5rem);
+    color: var(--color-text-primary, #ffffff);
+  }
+
+  .hero-line {
+    display: block;
+    background: linear-gradient(
+      135deg,
+      var(--color-text-primary, #ffffff) 0%,
+      var(--color-accent, #6366f1) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-line:nth-child(2) {
+    background: linear-gradient(
+      135deg,
+      var(--color-accent, #6366f1) 0%,
+      #818cf8 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-line:nth-child(3) {
+    background: linear-gradient(
+      135deg,
+      #818cf8 0%,
+      #f093fb 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-tagline {
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 400;
+    color: var(--color-text-secondary, #a0a0a0);
+    margin: 0 0 var(--space-10, 2.5rem);
+    letter-spacing: 0.02em;
+  }
+
+  .hero-cta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4, 1rem);
+    align-items: center;
+  }
+
+  .cta-primary,
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4, 1rem) var(--space-8, 2rem);
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: var(--font-size-base, 1rem);
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: var(--radius-lg, 0.75rem);
+    transition: all var(--transition-base, 250ms ease);
+    min-width: 200px;
+  }
+
+  .cta-primary {
+    background: var(--gradient-futuristic, linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%));
+    color: var(--color-text-primary, #ffffff);
+    box-shadow: var(--shadow-glow, 0 0 20px rgb(99 102 241 / 0.3));
+  }
+
+  .cta-primary:hover,
+  .cta-primary:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgb(99 102 241 / 0.5);
+  }
+
+  .cta-secondary {
+    background: transparent;
+    color: var(--color-text-primary, #ffffff);
+    border: 2px solid var(--color-bg-elevated, #1a1a1a);
+  }
+
+  .cta-secondary:hover,
+  .cta-secondary:focus {
+    border-color: var(--color-accent, #6366f1);
+    background: rgba(99, 102, 241, 0.1);
+  }
+
+  .cta-primary:focus-visible,
+  .cta-secondary:focus-visible {
+    outline: 2px solid var(--color-accent, #6366f1);
+    outline-offset: 2px;
+  }
+
+  @media (min-width: 640px) {
+    .hero-cta {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+</style>
