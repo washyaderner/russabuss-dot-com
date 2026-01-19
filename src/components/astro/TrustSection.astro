@@ -1,0 +1,194 @@
+---
+// TrustSection component for russabuss.com homepage
+// "Your audio is in good hands" - credentials and gear showcase
+
+interface Credential {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+const credentials: Credential[] = [
+  {
+    icon: '🎓',
+    title: '15+ Years Experience',
+    description: 'Professional audio engineering and music production since 2009',
+  },
+  {
+    icon: '🎵',
+    title: '500+ Projects',
+    description: 'Albums, singles, podcasts, and commercial work delivered',
+  },
+  {
+    icon: '🏆',
+    title: 'Industry Standard',
+    description: 'Pro Tools certified, working with major and indie artists',
+  },
+  {
+    icon: '🎧',
+    title: 'Premium Gear',
+    description: 'Monitoring, outboard processing, and acoustic treatment',
+  },
+];
+
+const gearList = [
+  'Pro Tools Ultimate',
+  'Universal Audio Apollo',
+  'Neumann U87',
+  'SSL Fusion',
+  'Focal Trio6 Be',
+  'Waves, FabFilter, iZotope',
+];
+---
+
+<section class="trust" aria-labelledby="trust-heading">
+  <div class="trust-container">
+    <div class="trust-header">
+      <h2 id="trust-heading" class="trust-title">Your audio is in good hands</h2>
+      <p class="trust-subtitle">
+        Professional results backed by experience, quality gear, and a commitment to your vision.
+      </p>
+    </div>
+
+    <div class="credentials-grid">
+      {credentials.map((cred) => (
+        <div class="credential-card">
+          <span class="credential-icon" aria-hidden="true">{cred.icon}</span>
+          <h3 class="credential-title">{cred.title}</h3>
+          <p class="credential-description">{cred.description}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="gear-section">
+      <h3 class="gear-title">Studio Gear</h3>
+      <ul class="gear-list">
+        {gearList.map((item) => (
+          <li class="gear-item">{item}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .trust {
+    background: var(--gradient-slate, linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%));
+    padding: var(--space-20, 5rem) var(--space-4, 1rem);
+  }
+
+  .trust-container {
+    max-width: var(--container-xl, 1280px);
+    margin: 0 auto;
+  }
+
+  .trust-header {
+    text-align: center;
+    margin-bottom: var(--space-16, 4rem);
+  }
+
+  .trust-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: var(--color-text-primary, #ffffff);
+    margin: 0 0 var(--space-4, 1rem);
+  }
+
+  .trust-subtitle {
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: var(--font-size-lg, 1.125rem);
+    color: var(--color-text-secondary, #a0a0a0);
+    margin: 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .credentials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6, 1.5rem);
+    margin-bottom: var(--space-16, 4rem);
+  }
+
+  .credential-card {
+    background: var(--color-bg-secondary, #141414);
+    border-radius: var(--radius-lg, 0.75rem);
+    padding: var(--space-6, 1.5rem);
+    text-align: center;
+    transition: transform var(--transition-base, 250ms ease);
+  }
+
+  .credential-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .credential-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: var(--space-4, 1rem);
+  }
+
+  .credential-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: var(--font-size-lg, 1.125rem);
+    font-weight: 600;
+    color: var(--color-text-primary, #ffffff);
+    margin: 0 0 var(--space-2, 0.5rem);
+  }
+
+  .credential-description {
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: var(--font-size-sm, 0.875rem);
+    color: var(--color-text-secondary, #a0a0a0);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .gear-section {
+    text-align: center;
+    padding: var(--space-8, 2rem);
+    background: var(--color-bg-secondary, #141414);
+    border-radius: var(--radius-xl, 1rem);
+  }
+
+  .gear-title {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: var(--font-size-xl, 1.25rem);
+    font-weight: 600;
+    color: var(--color-text-primary, #ffffff);
+    margin: 0 0 var(--space-6, 1.5rem);
+  }
+
+  .gear-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3, 0.75rem);
+  }
+
+  .gear-item {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: var(--font-size-sm, 0.875rem);
+    color: var(--color-text-secondary, #a0a0a0);
+    background: var(--color-bg-elevated, #1a1a1a);
+    padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
+    border-radius: var(--radius-md, 0.5rem);
+  }
+
+  @media (min-width: 640px) {
+    .credentials-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .credentials-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
