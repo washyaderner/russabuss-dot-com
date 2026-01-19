@@ -2,11 +2,12 @@
 // HeroSection component for russabuss.com homepage
 // Displays hero headline with gradient background
 // Future: Add GSAP animations and Three.js 3D visuals
+import { ShaderAnimation } from '../react/ShaderAnimation';
 ---
 
 <section class="hero" aria-labelledby="hero-headline">
   <div class="hero-background">
-    <div class="hero-gradient"></div>
+    <ShaderAnimation client:load />
   </div>
   <div class="hero-content">
     <h1 id="hero-headline" class="hero-headline">
@@ -16,7 +17,7 @@
     </h1>
     <p class="hero-tagline">Your sound, elevated.</p>
     <div class="hero-cta">
-      <a href="/beats" class="cta-primary">Browse Beats</a>
+      <a href="/beats" class="cta-primary gradient-btn">Browse Beats</a>
       <a href="/services" class="cta-secondary">View Services</a>
     </div>
   </div>
@@ -41,7 +42,7 @@
   .hero-gradient {
     position: absolute;
     inset: 0;
-    background: var(--gradient-hero, linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%));
+    /* Shader handles background */
   }
 
   /* Subtle animated gradient overlay - darker, more atmospheric */
@@ -151,7 +152,7 @@
   }
 
   .cta-primary {
-    background: var(--gradient-futuristic, linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%));
+    /* Removed background as gradient-btn handles it */
     color: var(--color-text-primary, #ffffff);
     box-shadow: var(--shadow-glow, 0 0 20px rgb(99 102 241 / 0.3));
   }

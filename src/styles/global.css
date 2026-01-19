@@ -105,3 +105,6 @@ a:hover {
 .skip-link:focus {
   top: var(--space-4);
 }
+@import "./components/gradient-buttons.css";
+@import "./components/glowing-effect.css";
+@import "./components/pricing-table.css";

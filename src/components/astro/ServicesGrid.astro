@@ -1,6 +1,7 @@
 ---
 // ServicesGrid component for russabuss.com homepage
 // 6 service cards: Mix & Master, Custom Tracks, Beats, Studio Time, Vocals, DJ
+import { ServiceCard } from '../react/ServiceCard';
 
 interface Service {
   title: string;
@@ -60,12 +61,7 @@ const services: Service[] = [
 
     <div class="services-grid">
       {services.map((service) => (
-        <a href={service.href} class="service-card">
-          <span class="service-icon" aria-hidden="true">{service.icon}</span>
-          <h3 class="service-title">{service.title}</h3>
-          <p class="service-description">{service.description}</p>
-          <span class="service-arrow" aria-hidden="true">→</span>
-        </a>
+        <ServiceCard client:visible {...service} />
       ))}
     </div>
   </div>
@@ -106,89 +102,11 @@ const services: Service[] = [
     line-height: 1.6;
   }
 
+  /* Card styles moved to React component, but grid layout remains */
   .services-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-6, 1.5rem);
-  }
-
-  .service-card {
-    position: relative;
-    background: var(--color-bg-secondary, #141414);
-    border: 1px solid var(--color-bg-elevated, #1a1a1a);
-    border-radius: var(--radius-lg, 0.75rem);
-    padding: var(--space-8, 2rem);
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    transition: all var(--transition-base, 250ms ease);
-    overflow: hidden;
-  }
-
-  .service-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--gradient-futuristic, linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%));
-    opacity: 0;
-    transition: opacity var(--transition-base, 250ms ease);
-  }
-
-  .service-card:hover,
-  .service-card:focus {
-    border-color: var(--color-accent, #6366f1);
-    transform: translateY(-4px);
-  }
-
-  .service-card:hover::before,
-  .service-card:focus::before {
-    opacity: 0.05;
-  }
-
-  .service-card:focus-visible {
-    outline: 2px solid var(--color-accent, #6366f1);
-    outline-offset: 2px;
-  }
-
-  .service-icon {
-    position: relative;
-    font-size: 2rem;
-    margin-bottom: var(--space-4, 1rem);
-    z-index: 1;
-  }
-
-  .service-title {
-    position: relative;
-    font-family: var(--font-display, 'Space Grotesk', sans-serif);
-    font-size: var(--font-size-xl, 1.25rem);
-    font-weight: 600;
-    color: var(--color-text-primary, #ffffff);
-    margin: 0 0 var(--space-3, 0.75rem);
-    z-index: 1;
-  }
-
-  .service-description {
-    position: relative;
-    font-family: var(--font-body, 'Inter', sans-serif);
-    font-size: var(--font-size-sm, 0.875rem);
-    color: var(--color-text-secondary, #a0a0a0);
-    margin: 0;
-    line-height: 1.6;
-    flex: 1;
-    z-index: 1;
-  }
-
-  .service-arrow {
-    position: relative;
-    font-size: var(--font-size-xl, 1.25rem);
-    color: var(--color-accent, #6366f1);
-    margin-top: var(--space-4, 1rem);
-    transition: transform var(--transition-fast, 150ms ease);
-    z-index: 1;
-  }
-
-  .service-card:hover .service-arrow {
-    transform: translateX(4px);
   }
 
   @media (min-width: 640px) {
