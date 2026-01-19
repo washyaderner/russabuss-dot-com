@@ -76,27 +76,39 @@
   margin: 0 auto;
 }
 
-/* Desktop: all 4 cards in a single row (1x4) */
+/* Desktop: 2x2 on smaller screens, 4x1 on large */
 @media (min-width: 1024px) {
   .pricing-grid-react {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .pricing-grid-react {
     grid-template-columns: repeat(4, 1fr);
+    align-items: center; /* Center vertically for scale effects */
   }
 }
 
 .pricing-card-react {
   background: var(--color-bg-primary);
   border: 1px solid var(--color-bg-slate);
-  border-radius: 1rem;
+  border-radius: 1.5rem; /* Match rounded-2xl */
   padding: 2rem;
   position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .pricing-card-react.popular {
   border: 2px solid var(--color-accent);
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+  /* Cyan/Blue glow for popular item */
+  box-shadow: 0 0 40px rgba(14, 116, 144, 0.15); 
+  background: linear-gradient(to bottom, var(--color-bg-secondary), var(--color-bg-primary));
+  z-index: 10;
 }
 
 .popular-badge {

@@ -1,9 +1,22 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Check, Star } from "lucide-react";
 import confetti from "canvas-confetti";
 import NumberFlow from "@number-flow/react";
 import { clsx } from "clsx";
+
+// Simple hook to detect desktop
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    if (media.matches !== matches) setMatches(media.matches);
+    const listener = () => setMatches(media.matches);
+    media.addEventListener("change", listener);
+    return () => media.removeEventListener("change", listener);
+  }, [matches, query]);
+  return matches;
+}
 
 export function PricingTable({
   plans,
@@ -12,6 +25,7 @@ export function PricingTable({
   showToggle = false
 }) {
   const [isMonthly, setIsMonthly] = useState(true);
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
   const switchRef = useRef(null);
 
   const handleToggle = (e) => {
@@ -30,9 +44,9 @@ export function PricingTable({
           y: y / window.innerHeight,
         },
         colors: [
-          "#6366f1", // Accent
-          "#818cf8",
-          "#4a2865",
+          "#0e7490", // Cyan
+          "#1e3a8a", // Blue
+          "#0f172a", // Slate
           "#ffffff",
         ],
         ticks: 200,
@@ -74,98 +88,115 @@ export function PricingTable({
       )}
 
       <div className="pricing-grid-react">
-        {plans.map((plan, index) => (
-          <motion.div
-            key={index}
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{
-              y: 0,
-              opacity: 1,
-              transition: {
+        {plans.map((plan, index) => {
+          // Calculate layout props for 4 items:
+          // We can't do the exact 3-card fan, but we can highlight the Popular one.
+          // Assuming 4 columns on desktop.
+          
+          return (
+            <motion.div
+              key={index}
+              initial={{ y: 50, opacity: 0 }}
+              whileInView={
+                isDesktop
+                  ? {
+                      y: plan.isPopular ? -20 : 0,
+                      opacity: 1,
+                      scale: plan.isPopular ? 1.05 : 1.0,
+                      zIndex: plan.isPopular ? 10 : 1,
+                    }
+                  : {
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                    }
+              }
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.8,
                 type: "spring",
                 stiffness: 100,
                 damping: 30,
-                delay: index * 0.1
-              }
-            }}
-            viewport={{ once: true }}
-            className={clsx(
-              "pricing-card-react",
-              plan.isPopular && "popular"
-            )}
-          >
-            {plan.isPopular && (
-              <div className="popular-badge">
-                <Star className="h-3 w-3 fill-current" />
-                <span>Most Popular</span>
-              </div>
-            )}
-
-            <div className="flex-1 flex flex-col">
-              <h3 className="pricing-name">{plan.name}</h3>
-              
-              <div className="pricing-price-wrapper">
-                <span className="pricing-price">
-                  <NumberFlow
-                    value={
-                      isMonthly ? Number(plan.price) : Number(plan.yearlyPrice || plan.price)
-                    }
-                    format={{
-                      style: "currency",
-                      currency: "USD",
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
-                    }}
-                    formatter={(value) => `${value}`} // Removed $ prefix as NumberFlow handles currency style if configured, or manually add it
-                    transformTiming={{
-                      duration: 500,
-                      easing: "ease-out",
-                    }}
-                    willChange
-                  />
-                </span>
-                <span className="pricing-period">
-                  {plan.period && `/ ${plan.period}`}
-                </span>
-              </div>
-
-              {plan.format && (
-                 <p className="text-sm text-neutral-400 font-mono mb-6 text-center">{plan.format}</p>
+                delay: index * 0.1,
+                opacity: { duration: 0.5 },
+              }}
+              className={clsx(
+                "pricing-card-react",
+                plan.isPopular && "popular"
+              )}
+            >
+              {plan.isPopular && (
+                <div className="popular-badge">
+                  <Star className="h-3 w-3 fill-current" />
+                  <span>Most Popular</span>
+                </div>
               )}
 
-              <ul className="pricing-features-list">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx} className="pricing-feature-item">
-                    <Check className="feature-icon h-4 w-4" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className="flex-1 flex flex-col">
+                <h3 className="pricing-name">{plan.name}</h3>
+                
+                <div className="pricing-price-wrapper">
+                  <span className="pricing-price">
+                    <NumberFlow
+                      value={
+                        isMonthly ? Number(plan.price) : Number(plan.yearlyPrice || plan.price)
+                      }
+                      format={{
+                        style: "currency",
+                        currency: "USD",
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      }}
+                      transformTiming={{
+                        duration: 500,
+                        easing: "ease-out",
+                      }}
+                      willChange
+                    />
+                  </span>
+                  <span className="pricing-period">
+                    {plan.period && `/ ${plan.period}`}
+                  </span>
+                </div>
 
-              <div className="pricing-btn-wrapper">
-                <a
-                  href={plan.href || "#"}
-                  className={clsx(
-                    "gradient-btn w-full",
-                    plan.isPopular && "gradient-btn-brand"
-                  )}
-                  style={{
-                    width: '100%',
-                    textAlign: 'center'
-                  }}
-                >
-                  {plan.buttonText}
-                </a>
+                {plan.format && (
+                   <p className="text-sm text-neutral-400 font-mono mb-6 text-center">{plan.format}</p>
+                )}
+
+                <ul className="pricing-features-list">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx} className="pricing-feature-item">
+                      <Check className="feature-icon h-4 w-4" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="pricing-btn-wrapper">
+                  <a
+                    href={plan.href || "#"}
+                    className={clsx(
+                      "gradient-btn w-full",
+                      plan.isPopular && "gradient-btn-brand"
+                    )}
+                    style={{
+                      width: '100%',
+                      textAlign: 'center'
+                    }}
+                  >
+                    {plan.buttonText}
+                  </a>
+                </div>
+                
+                {plan.description && (
+                  <p className="pricing-description text-center">
+                    {plan.description}
+                  </p>
+                )}
               </div>
-              
-              {plan.description && (
-                <p className="pricing-description text-center">
-                  {plan.description}
-                </p>
-              )}
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          );
+        })}
       </div>
     </div>
   );
