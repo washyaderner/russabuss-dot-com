@@ -133,7 +133,7 @@ export function ShaderAnimation() {
         inset: 0,
         width: '100%',
         height: '100%',
-        background: '#0a0a0a',
+        background: '#0d0d1a', /* Matches shader bg color */
         overflow: 'hidden',
         zIndex: 0,
         pointerEvents: 'none'
