@@ -87,3 +87,26 @@
 .glowing-effect-blur {
   filter: blur(var(--blur));
 }
+
+/* Global glow card utility */
+.glow-card {
+  position: relative;
+  box-shadow:
+    0 0 0 1px var(--glow-border-soft, rgba(99, 102, 241, 0.25)),
+    0 0 20px var(--glow-shadow-soft, rgba(76, 91, 181, 0.25)),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  transition: box-shadow var(--transition-base, 250ms ease);
+}
+
+.glow-card:hover,
+.glow-card:focus-within {
+  box-shadow:
+    0 0 0 1px var(--glow-border-strong, rgba(99, 102, 241, 0.55)),
+    0 0 28px var(--glow-shadow-strong, rgba(76, 91, 181, 0.5)),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+.glow-card:focus-visible {
+  outline: 2px solid var(--color-accent, #6366f1);
+  outline-offset: 2px;
+}

@@ -111,6 +111,15 @@
   --shadow-glow: 0 0 20px rgb(99 102 241 / 0.3);
 
   /* ========================================
+   * Glow Tokens
+   * Subtle border and shadow glow for cards
+   * ======================================== */
+  --glow-border-soft: rgba(99, 102, 241, 0.25);
+  --glow-border-strong: rgba(99, 102, 241, 0.55);
+  --glow-shadow-soft: rgba(76, 91, 181, 0.25);
+  --glow-shadow-strong: rgba(76, 91, 181, 0.5);
+
+  /* ========================================
    * Transitions
    * Consistent timing for animations
    * ======================================== */

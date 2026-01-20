@@ -36,7 +36,7 @@ const faqs: FAQ[] = [
 
     <div class="faq-grid">
       {faqs.map((faq, index) => (
-        <article class="faq-card">
+        <article class="faq-card glow-card">
           <div class="faq-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</div>
           <h3 class="faq-question">{faq.question}</h3>
           <p class="faq-answer">{faq.answer}</p>
@@ -44,7 +44,7 @@ const faqs: FAQ[] = [
       ))}
     </div>
 
-    <div class="faq-cta">
+    <div class="faq-cta glow-card">
       <p class="faq-cta-text">Have more questions?</p>
       <a href="/contact" class="faq-cta-link">Get in touch</a>
     </div>
