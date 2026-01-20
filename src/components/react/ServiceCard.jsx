@@ -1,20 +1,8 @@
 import React from 'react';
-import { GlowingEffect } from './GlowingEffect';
 
 export function ServiceCard({ title, description, icon, href }) {
   return (
-    <a href={href} className="block relative h-full no-underline group" style={{ borderRadius: '0.75rem' }}>
-      <div className="absolute inset-0 rounded-[0.75rem] overflow-hidden">
-        <GlowingEffect
-          spread={40}
-          glow={true}
-          disabled={false}
-          proximity={64}
-          inactiveZone={0.01}
-          borderWidth={2}
-        />
-      </div>
-      
+    <a href={href} className="block relative h-full no-underline group glow-card" style={{ borderRadius: '0.75rem' }}>
       <div 
         className="relative z-10 flex flex-col h-full bg-[var(--color-bg-secondary)] rounded-[0.75rem] border border-[var(--color-bg-elevated)] p-8 transition-colors group-hover:bg-[var(--color-bg-elevated)]"
         style={{ height: '100%' }}

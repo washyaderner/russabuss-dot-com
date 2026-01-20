@@ -118,7 +118,7 @@ export function PricingTable({
                 opacity: { duration: 0.5 },
               }}
               className={clsx(
-                "pricing-card-react",
+                "pricing-card-react", "glow-card",
                 plan.isPopular && "popular"
               )}
             >
