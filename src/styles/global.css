@@ -16,12 +16,93 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root {
+  /* Site background: total black with a subtle diagonal teal gradient. */
+  /* Static gradient - no scroll animation. */
+  --color-bg-primary: #000000;
+  --site-gradient-accent: rgba(11, 77, 90, 0.45);
+  --site-gradient-angle: 135deg;
+}
+
 body {
   font-family: var(--font-body);
+  /* Static black-to-teal diagonal gradient. */
   background-color: var(--color-bg-primary);
+  background-image: linear-gradient(
+    var(--site-gradient-angle),
+    #000000 0%,
+    #000000 60%,
+    var(--site-gradient-accent) 100%
+  );
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: var(--color-text-primary);
   line-height: 1.6;
   min-height: 100vh;
+}
+
+/* Section background overrides to let the global gradient show through. */
+.pricing,
+.trust,
+.faq,
+.services,
+.contact,
+.hero {
+  background: transparent !important;
+}
+
+/* Remove component-level overlays that block the global gradient. */
+.pricing::before,
+.hero-gradient {
+  background: transparent !important;
+  opacity: 0 !important;
+}
+
+/* ========================================
+ * Frosted Glass Card System
+ * Premium translucent cards that let the gradient peek through.
+ * Inspired by Apple/iOS glass morphism.
+ * ======================================== */
+.pricing-card,
+.credential-card,
+.faq-card,
+.service-card,
+.contact-form-wrapper,
+.info-block,
+.gear-section,
+.faq-cta {
+  /* Frosted glass base */
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  /* Subtle light edge for depth */
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  /* Soft inner glow */
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
+    0 4px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* Hover state: slightly brighter glass */
+.pricing-card:hover,
+.credential-card:hover,
+.faq-card:hover,
+.service-card:hover {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Keep highlighted card border accent */
+.pricing-card--highlight {
+  border: 2px solid var(--color-accent, #6366f1) !important;
+}
+
+@media (max-width: 768px) {
+  /* Fixed backgrounds can be janky on mobile. */
+  body {
+    background-attachment: scroll;
+  }
 }
 
 /* Typography */
