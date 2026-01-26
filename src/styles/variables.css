@@ -27,8 +27,9 @@
    * Accent Colors
    * Brand accent for interactive elements
    * ======================================== */
-  --color-accent: #6366f1;
-  --color-accent-hover: #818cf8;
+  /* Teal accents align buttons with the background gradient. */
+  --color-accent: #2dd4bf;
+  --color-accent-hover: #5eead4;
 
   /* ========================================
    * Gradients
@@ -36,8 +37,8 @@
    * Slate sections use dark minimalist gradient
    * ======================================== */
 
-  /* Vibrant gradient for hero and accent sections */
-  --gradient-futuristic: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  /* Teal glow gradient for buttons and highlight surfaces */
+  --gradient-futuristic: linear-gradient(135deg, #0f766e 0%, #14b8a6 55%, #5eead4 100%);
 
   /* Subtle gradient for hero backgrounds */
   --gradient-hero: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
@@ -107,8 +108,8 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.5);
 
-  /* Glow effect for accent elements */
-  --shadow-glow: 0 0 20px rgb(99 102 241 / 0.3);
+  /* Teal glow for hover and focus accents */
+  --shadow-glow: 0 0 20px rgb(45 212 191 / 0.3);
 
   /* ========================================
    * Transitions
