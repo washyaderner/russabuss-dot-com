@@ -22,6 +22,19 @@ html {
   --color-bg-primary: #000000;
   --site-gradient-accent: rgba(11, 77, 90, 0.45);
   --site-gradient-angle: 135deg;
+
+  /* Button styling: see-through glass with white glow. */
+  --button-glass: rgba(255, 255, 255, 0.04);
+  --button-glass-hover: rgba(255, 255, 255, 0.08);
+  --button-text-color: #ffffff;
+  --button-border: rgba(255, 255, 255, 0.55);
+  --button-glow: 0 0 22px rgba(255, 255, 255, 0.35);
+
+  /* Pricing card teal borders to match the gradient corner. */
+  --pricing-border-teal: rgba(11, 77, 90, 0.7);
+  --pricing-border-teal-hover: rgba(11, 77, 90, 0.9);
+  --pricing-border-teal-strong: rgba(17, 94, 89, 0.95);
+  --pricing-glow-teal: 0 0 18px rgba(11, 77, 90, 0.45);
 }
 
 body {
@@ -95,7 +108,57 @@ body {
 
 /* Keep highlighted card border accent */
 .pricing-card--highlight {
-  border: 2px solid var(--color-accent, #6366f1) !important;
+  border: 2px solid var(--pricing-border-teal-strong) !important;
+  box-shadow: var(--pricing-glow-teal) !important;
+}
+
+/* Pricing cards use a deeper teal border to echo the background. */
+.pricing-card {
+  border-color: var(--pricing-border-teal) !important;
+}
+
+.pricing-card:hover {
+  border-color: var(--pricing-border-teal-hover) !important;
+}
+
+/* ========================================
+ * Silver Button Treatment
+ * Neutral, glowing silver buttons across the site.
+ * ======================================== */
+.cta-primary,
+.tier-cta,
+.faq-cta-link,
+.form-submit,
+.success-button {
+  background: var(--button-glass) !important;
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  color: var(--button-text-color) !important;
+  border: 1px solid var(--button-border) !important;
+  box-shadow: var(--button-glow) !important;
+}
+
+.cta-primary:hover,
+.cta-primary:focus,
+.tier-cta:hover,
+.tier-cta:focus,
+.faq-cta-link:hover,
+.faq-cta-link:focus,
+.form-submit:hover,
+.form-submit:focus,
+.success-button:hover,
+.success-button:focus {
+  background: var(--button-glass-hover) !important;
+  box-shadow: 0 0 32px rgba(255, 255, 255, 0.55) !important;
+}
+
+.cta-primary:focus-visible,
+.tier-cta:focus-visible,
+.faq-cta-link:focus-visible,
+.form-submit:focus-visible,
+.success-button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.7) !important;
+  outline-offset: 2px;
 }
 
 @media (max-width: 768px) {
